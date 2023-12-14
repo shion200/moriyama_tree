@@ -1,3 +1,6 @@
+import React from "react";
+import "./Page1.css";
+
 export const Page1 = () => {
     return (
       <div>
