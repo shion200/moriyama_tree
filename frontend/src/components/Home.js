@@ -4,7 +4,7 @@ export const Home = () => {
   return (
     <div>
       <div className="a">
-        <p>ユーザーID: 1</p>
+        
         <img src="./images/christmasTree.png" alt="クリスマスツリー" />
       </div>
 
@@ -16,6 +16,7 @@ export const Home = () => {
           <p>画像生成の要素</p>
           <textarea />
           
+          <br />
           <input className="submit-btn"
             type='submit'
             value='送信'

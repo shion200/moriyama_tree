@@ -13,14 +13,20 @@ function App() {
         <header>
           <h1>クリスマスツリーをつくろう！</h1>
         </header>
+
         
-        <div>
+        
+        <div className="link">
           <Link to="/">Home</Link>
           <br />
           <Link to="/page1">ログインページ</Link>
           <br />
           <Link to="/page2">絵を選ぶページ</Link>
+          <br />
+          <p>ユーザーID: 1</p>
         </div>
+
+        
 
         
 
