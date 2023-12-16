@@ -72,7 +72,7 @@ class PathBase(BaseModel):
     id : int
     path : str
     name : str
-
+      
 class User(BaseModel):
     username: str
     email: Optional[str] = None
