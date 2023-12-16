@@ -1,8 +1,13 @@
 from typing import Optional
 # from fastapi import Depends, FastAPI
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
+from fastapi.responses import FileResponse
+from starlette.requests import Request
+from starlette.routing import Route
+from createImageFromText2 import createImageFromText
+from googleTranslate import googleTranslate
 
 fake_users_db = {
     "johndoe": {
@@ -91,3 +96,9 @@ async def root():
 # async def read_users(commons: dict = Depends()):
 #     return commons
 
+@app.post("/prompt")
+async def getPromptTemp(request: Request, promptTextTemp: str):
+    PromptTextJp = googleTranslate(promptTextTemp)
+    img, imageName = createImageFromText(PromptTextJp)
+    # return FileResponse(img, media_type="image/png"), imageName
+    return imageName
