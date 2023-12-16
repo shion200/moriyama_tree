@@ -134,7 +134,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     # hashed_password = password(king)
     if not hashed_password == user:
         raise HTTPException(status_code=400, detail = "Incorrect username or password")
-    return {"sccess_token": user_dict[0][0], "token_type" : "bearer"}
+    return {"access_token": user_dict[0][0], "token_type" : "bearer"}
 
 @app.get("/users/me")
 async def read_users_me(current_user: User = Depends(get_current_active_user)):

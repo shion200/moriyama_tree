@@ -2,6 +2,8 @@ fastapi
 pydantic
 python-multipart
 sqlalchemy
+sqlalchemy_utils
 stability-sdk
 mysql-connector-python
 mysqlclient
+
