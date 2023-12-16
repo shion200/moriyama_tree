@@ -4,13 +4,13 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from see_fastdb import name, password, dict_user
+from fastapi.middleware.cors import CORSMiddleware
 
 import db_model as m
 import db_setting as s
 
 import path_models as pm
 import path_settings as ps
-
 
 
 king = "fast.db"
@@ -44,6 +44,22 @@ async def read_users():
 # }
 
 app = FastAPI()
+
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # def fake_hash_password(password: str):
 #     return "fakehashed" + password
