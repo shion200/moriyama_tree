@@ -11,19 +11,15 @@ export const Page1 = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // FormDataオブジェクトを使用してリクエストデータを準備
       const formData = new FormData();
       formData.append('username', username);
       formData.append('password', password);
 
-      // FastAPIサーバーにPOSTリクエストを送信
       const response = await axios.post('http://localhost:8000/token', formData);
 
-      // レスポンスに認証トークンが含まれている場合
       if (response.data && response.data.access_token) {
-        // トークンをローカルストレージに保存し、ホームページにリダイレクト
         localStorage.setItem('token', response.data.access_token);
-        navigate("/");
+        navigate("/Home"); // ログイン成功時に/Homeに遷移
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
