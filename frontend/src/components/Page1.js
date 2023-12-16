@@ -14,7 +14,7 @@ export const Page1 = () => {
     const correctPassword = "password123";
 
     if (username === correctUsername && password === correctPassword) {
-      navigate("/App"); // 正しい場合、Homeページにリダイレクト
+      navigate("/"); // 正しい場合、Homeページにリダイレクト
     } else {
       alert("名前かパスワードが間違えています"); // 間違いがある場合、警告を表示
     }

@@ -1,11 +1,64 @@
-img {
-    margin: auto;
-    display: block;
-    width: 48%;
-    height: auto;
+.container{
+    background-image: url('../../public/images/christmasTree.png');
+    height: 500px;
+    width: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    margin-left: 450px;
+    margin-right: 450px;
+    
+    align-items: center;
+    
+}
+
+.item1{
+    position: absolute;
+    top: 25%;
+    right:50%;
+    transform: translateX(+54%);
+    
+}
+
+.item2{
+    position: absolute;
+    top: 40%;
+    left:50%;
+    transform: translateX(-75%);
+}
+
+.item3{
+    position: absolute;
+    top: 40%;
+    right:50%;
+    transform: translateX(+80%);
+}
+
+.item4{
+    position: absolute;
+    top: 58%;
+    left:50%;
+    transform: translateX(-100%);
+}
+
+.item5{
+    position: absolute;
+    top: 58%;
+    right:50%;
+    transform: translateX(+53%);
+}
+
+.item6{
+    position: absolute;
+    top: 58%;
+    left:50%;
+    transform: translateX(5%);
 }
 
 .contact-form{
     text-align: center;
 }
+
+
+  
 
