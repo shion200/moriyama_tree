@@ -264,7 +264,7 @@ async def delete_user(id: int):
 #     return commons
 
 @app.post("/prompt")
-async def getPromptTemp(request: Request, promptTextTemp: str):
+async def getPromptTemp(promptTextTemp: str):
     PromptTextJp = googleTranslate(promptTextTemp)
     img, imageName, pic_name = createImageFromText(PromptTextJp) 
     # return FileResponse(img, media_type="image/png"), imageName
