@@ -43,8 +43,9 @@ class UserInDB(User):
     
 class UserBase(BaseModel):
     name : str
-    mail : str
-    sex : str
+    password : str
+    url_num : int
+    url : str
 
 def get_user(db, username: str):
     if username in db:
@@ -105,8 +106,9 @@ async def create_user(data: UserBase):
     
     try:
         user.name = data.name
-        user.mail = data.mail
-        user.sex = data.sex
+        user.password = data.password
+        user.url_num = data.url_num
+        user.url = data.url
         session.commit()
     except():
         session.rollback()
@@ -114,12 +116,12 @@ async def create_user(data: UserBase):
     finally:
         session.close()
         
-@app.delete("/users/{id}", tags = ["users"])
-async def delete_user(id: int):
+@app.delete("/users/{name}", tags = ["users"])
+async def delete_user(name: str):
     session = s.session()
     try:
         query = s.session.query(m.Users)
-        query = query.filter(m.User.user_id == id)
+        query = query.filter(m.User.user_name == name)
         query.delete()
         session.commit()
     except:
@@ -128,13 +130,13 @@ async def delete_user(id: int):
     finally:
         session.close()
     
-@app.put("/users/{id}", tags = ["users"])
-async def update_user(id: int, data:UserBase):
+@app.put("/users/{name}", tags = ["users"])
+async def update_user(name: str, data:UserBase):
     session = s.session()
     try:
         s.session.query(m.Users).\
         filter(m.Users.user_id == id).\
-        update({"name" : data.name, "mail" : data.mail, "sex" : data.sex})
+        update({"name" : data.name, "password" : data.password, "url_num" : data.url_num, "url" : data.url})
         session.commit()
     except:
         session.rollback()

@@ -10,10 +10,10 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from db_model import Base
 
 # 接続したいDBへの接続情報
-user_name = 'NAME'
-password = 'PASSWORD'
-host = "HOST"
-database_name = "fastapi_sample"
+# user_name = 'NAME'
+# password = 'PASSWORD'
+# host = "HOST"
+# database_name = "fastapi_sample"
 
 # バインディング
 # DATABASE = 'mysql://root:Usushio0324@localhost3306/fastapi_sample?charset=utf8'# % (
@@ -22,7 +22,7 @@ database_name = "fastapi_sample"
     # host,
     # database_name,
 # )
-DATABASE = "sqlite:///./fastapi.db"
+DATABASE = "sqlite:///./fast.db"
 
 # DBとの接続
 ENGINE = create_engine(
