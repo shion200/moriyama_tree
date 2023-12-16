@@ -10,9 +10,22 @@ img{
     height: auto;
 }
 
-button{
+.button1{
     margin: auto;
     display: block;
     width: 10%;
     height: auto;
+    text-align: center;
+}
+
+.button2{
+    margin: auto;
+    display: block;
+    width: 10%;
+    height: auto;
+    text-align: center;
+}
+
+form{
+    text-align: center;
 }
