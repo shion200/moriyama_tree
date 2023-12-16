@@ -1,10 +1,18 @@
+# coding: utf-8
 from typing import Optional
 # from fastapi import Depends, FastAPI
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from see_fastdb import name, password, dict_user
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from starlette.requests import Request
+from starlette.routing import Route
+from createImageFromText2 import createImageFromText
+from googleTranslate import googleTranslate
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 import db_model as m
 import db_setting as s
@@ -258,3 +266,20 @@ async def delete_user(id: int):
 # async def read_users(commons: dict = Depends()):
 #     return commons
 
+@app.exception_handler(RequestValidationError)
+async def handler(request:Request, exc:RequestValidationError):
+    print(exc)
+    return JSONResponse(content={}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+# リクエストボディのモデル定義
+class Prompt(BaseModel):
+    promptTextTemp: str
+
+@app.post("/prompt")
+async def get_prompt_temp(prompt: Prompt):
+    # print(request)  # 必要に応じてリクエスト全体を出力
+    PromptTextJp = googleTranslate(prompt.promptTextTemp)
+    img, imageName = createImageFromText(PromptTextJp) 
+    # return FileResponse(img, media_type="image/png")  # 画像のレスポンスが必要な場合
+    return imageName
