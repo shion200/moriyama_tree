@@ -1,1 +1,7 @@
 fastapi
+pydantic
+python-multipart
+sqlalchemy
+stability-sdk
+mysql-connector-python
+mysqlclient

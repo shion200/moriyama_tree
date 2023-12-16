@@ -6,6 +6,7 @@ from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 import sys
 from googleTranslate import googleTranslate
+import random
 
 def createImageFromText(promptText):
     # Our Host URL should not be prepended with "https" nor should it have a trailing slash.
@@ -32,8 +33,8 @@ def createImageFromText(promptText):
 
     # Set up our initial generation parameters.
     answers = stability_api.generate(
-        prompt=promptText,
-        seed=4253978046, # If a seed is provided, the resulting generated image will be deterministic.
+        prompt=promptText + "delicate anime-like illustration",
+        seed=random.randint(0, 1000000000), # If a seed is provided, the resulting generated image will be deterministic.
                         # What this means is that as long as all generation parameters remain the same, you can always recall the same image simply by generating it again.
                         # Note: This isn't quite the case for Clip Guided generations, which we'll tackle in a future example notebook.
         steps=30, # Amount of inference steps performed on image generation. Defaults to 30. 
@@ -58,7 +59,9 @@ def createImageFromText(promptText):
                     "Please modify the prompt and try again.")
             if artifact.type == generation.ARTIFACT_IMAGE:
                 img = Image.open(io.BytesIO(artifact.binary))
-                img.save(promptText+ ".png") # Save our generated images with their seed number as the filename.
+                img.save("./createdImage/"+promptText.replace(' ','')+".png") # Save our generated images with their seed number as the filename.
+                imageName = "./createdImage/"+promptText.replace(' ','')+ ".png"
+    return img, imageName
 
 if __name__ == '__main__':
     args = sys.argv
