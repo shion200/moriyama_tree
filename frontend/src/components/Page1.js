@@ -18,11 +18,11 @@ export const Page1 = () => {
 
       // FastAPIサーバーにPOSTリクエストを送信
       const response = await axios.post('http://localhost:8000/token', formData);
-
       // レスポンスに認証トークンが含まれている場合
       if (response.data && response.data.access_token) {
         // トークンをローカルストレージに保存し、ホームページにリダイレクト
         localStorage.setItem('token', response.data.access_token);
+        console.log(response.data)
         navigate("/");
       }
     } catch (error) {
@@ -33,6 +33,9 @@ export const Page1 = () => {
       }
     }
   };
+
+
+
 
   return (
     <div className="Page1">
