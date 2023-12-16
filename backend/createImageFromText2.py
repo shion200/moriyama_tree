@@ -41,8 +41,8 @@ def createImageFromText(promptText):
         cfg_scale=7.0, # Influences how strongly your generation is guided to match your prompt.
                     # Setting this value higher increases the strength in which it tries to match your prompt.
                     # Defaults to 7.0 if not specified.
-        width=1024, # Generation width, defaults to 512 if not included.
-        height=1024, # Generation height, defaults to 512 if not included.
+        width=200, # Generation width, defaults to 512 if not included.
+        height=200, # Generation height, defaults to 512 if not included.
         samples=1, # Number of images to generate, defaults to 1 if not included.
         sampler=generation.SAMPLER_K_DPMPP_2M # Choose which sampler we want to denoise our generation with.
                                                     # Defaults to k_dpmpp_2m if not specified. Clip Guidance only supports ancestral samplers.
@@ -71,3 +71,37 @@ if __name__ == '__main__':
         createImageFromText(promptText)
     else:
         print('Arguments error')
+
+
+    with open(image_path, 'rb') as image_data:
+        # 写真のアップロード
+        response1 = google.post(upload_url, headers=headers, data=image_data)
+        print("\nresponse1=" + str(response1.content))
+
+        r = response1.content
+
+        data = {
+            'albumId': album_id,
+                "newMediaItems":[{
+                    "simpleMediaItem":
+                        {"uploadToken":r.decode("utf-8")}
+                    }
+                ]
+            }
+        data = json.dumps(data)
+
+   print("\ndata=" + data)
+
+   #写真の登録
+   response2 = google.post(media_url, data=data)
+   print("\nresponse2=" + str(response2.content))
+
+def resource_path(relative_path):
+ try:
+   base_path = sys._MEIPASS
+ except Exception:
+   base_path = os.path.dirname(__file__)
+ return os.path.join(base_path, relative_path)
+
+if __name__ == "__main__":
+ main()
