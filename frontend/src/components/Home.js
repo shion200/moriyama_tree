@@ -21,7 +21,7 @@ export const Home = () => {
           <p>出来事の内容</p>
           <input />
           
-          <p>画像生成の要素</p>
+          <p>画像生成のPrompt</p>
           <textarea />
           
           <br />
