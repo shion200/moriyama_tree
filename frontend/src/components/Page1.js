@@ -19,7 +19,7 @@ export const Page1 = () => {
 
       if (response.data && response.data.access_token) {
         localStorage.setItem('token', response.data.access_token);
-        navigate("/Home"); // ログイン成功時に/Homeに遷移
+        navigate("/"); // ログイン成功時に/に遷移
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
