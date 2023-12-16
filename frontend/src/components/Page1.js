@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Page1.css";
 
@@ -11,17 +11,19 @@ export const Page1 = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Replace 'http://localhost:8000' with your FastAPI server URL
-      const response = await axios.post('http://localhost:8000/token', {
-        username: username,
-        password: password,
-      });
+      // FormDataオブジェクトを使用してリクエストデータを準備
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
 
-      // Assuming the response includes an authentication token
+      // FastAPIサーバーにPOSTリクエストを送信
+      const response = await axios.post('http://localhost:8000/token', formData);
+
+      // レスポンスに認証トークンが含まれている場合
       if (response.data && response.data.access_token) {
-        // You might want to store the token in local storage or context for further requests
+        // トークンをローカルストレージに保存し、ホームページにリダイレクト
         localStorage.setItem('token', response.data.access_token);
-        navigate("/"); // Navigate to the home page on successful login
+        navigate("/");
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
