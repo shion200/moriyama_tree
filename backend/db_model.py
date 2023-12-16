@@ -16,7 +16,7 @@ class Users(Base):
     __tablename__ = 'users'
     name = Column(String(100), primary_key=True)
     password = Column(String(50),nullable=False,unique=True)
-    url_num = Column(Integer, nullable=False)
+    url_num = Column(Integer, nullable=False, default=0)
     url = Column(String(1000),nullable=True)
     created_at = Column(DateTime, server_default=current_timestamp())
 

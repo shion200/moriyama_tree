@@ -6,4 +6,4 @@ sqlalchemy_utils
 stability-sdk
 mysql-connector-python
 mysqlclient
-
+googletrans==3.0.1a0
