@@ -7,34 +7,31 @@ export const Home = () => {
 
   const toPage2 = (event) => {
     event.preventDefault(); 
-    navigate("/React");     
+    navigate("/Page2"); // Updated this line to navigate to /Page2
   };
 
   return (
     <div>
-      <div class="container">
-        <div class="item1">
+      <div className="container">
+        <div className="item1">
           <img src="./images/item1.png" alt="絵1" />
         </div>
-        <div class="item2">
+        <div className="item2">
           <img src="./images/item2.png" alt="絵2" />
         </div>
-        <div class="item3">
+        <div className="item3">
           <img src="./images/item3.png" alt="絵3" />
         </div>
-        <div class="item4">
+        <div className="item4">
           <img src="./images/item4.png" alt="絵4" />
         </div>
-        <div class="item5">
+        <div className="item5">
           <img src="./images/item5.png" alt="絵5" />
         </div>
-        <div class="item6">
+        <div className="item6">
           <img src="./images/item6.png" alt="絵6" />
         </div>
       </div>
-
-      
-      
 
       <div className='contact-form'>
         <form onSubmit={toPage2}>

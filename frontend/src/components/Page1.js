@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import axios for API calls
 import { useNavigate } from "react-router-dom";
 import "./Page1.css";
 
@@ -7,16 +8,27 @@ export const Page1 = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // ここにハードコーディングされたユーザー名とパスワードを設定
-    const correctUsername = "user123"; 
-    const correctPassword = "password123";
+    try {
+      // Replace 'http://localhost:8000' with your FastAPI server URL
+      const response = await axios.post('http://localhost:8000/token', {
+        username: username,
+        password: password,
+      });
 
-    if (username === correctUsername && password === correctPassword) {
-      navigate("/"); // 正しい場合、Homeページにリダイレクト
-    } else {
-      alert("名前かパスワードが間違えています"); // 間違いがある場合、警告を表示
+      // Assuming the response includes an authentication token
+      if (response.data && response.data.access_token) {
+        // You might want to store the token in local storage or context for further requests
+        localStorage.setItem('token', response.data.access_token);
+        navigate("/"); // Navigate to the home page on successful login
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert("名前かパスワードが間違えています");
+      } else {
+        alert("エラーが発生しました");
+      }
     }
   };
 
@@ -33,7 +45,7 @@ export const Page1 = () => {
         />
         <p>パスワード</p>
         <input 
-          type="password" // パスワード入力のためのタイプを設定
+          type="password"
           placeholder="パスワードを入力してください"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
