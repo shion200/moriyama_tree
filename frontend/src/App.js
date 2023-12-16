@@ -26,7 +26,7 @@ function App() {
           <br />
           <Link to="/page2">絵を選ぶページ</Link>
           <br />
-          <p>ユーザーID: 1</p>
+          
         </div>
 
         <div className="content">

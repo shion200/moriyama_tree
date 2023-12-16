@@ -1,53 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 export const Home = () => {
   const navigate = useNavigate();
+  const [images, setImages] = useState([]); // 画像を管理
+  const [prompt, setPrompt] = useState(""); // 画像生成のプロンプトを管理
 
-  const toPage2 = (event) => {
-    event.preventDefault(); 
-    navigate("/Page2"); // Updated this line to navigate to /Page2
+  useEffect(() => {
+    // APIから画像データを取得
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get("APIのURL"); // Azure APIのURLを指定
+        setImages(response.data); // 画像データをステートにセット
+      } catch (error) {
+        console.error("Error fetching images: ", error);
+      }
+    };
+
+    fetchImages();
+  }, []); // コンポーネントがマウントされた時に1度だけ実行
+
+  
+  const toPage2 = async (event) => {
+    event.preventDefault();
+    
+    try {
+      await axios.post("http://localhost:8000/prompt", {promptTextTemp:prompt});
+      navigate("/Page2");
+    } catch (error) {
+      console.error("Error generating image: ", error);
+      if (error.response) {
+        // サーバーからの応答をログに出力
+        console.error("Server response: ", error.response.data);
+      }
+    }
   };
+  
 
   return (
     <div>
       <div className="container">
-        <div className="item1">
-          <img src="./images/item1.png" alt="絵1" />
-        </div>
-        <div className="item2">
-          <img src="./images/item2.png" alt="絵2" />
-        </div>
-        <div className="item3">
-          <img src="./images/item3.png" alt="絵3" />
-        </div>
-        <div className="item4">
-          <img src="./images/item4.png" alt="絵4" />
-        </div>
-        <div className="item5">
-          <img src="./images/item5.png" alt="絵5" />
-        </div>
-        <div className="item6">
-          <img src="./images/item6.png" alt="絵6" />
-        </div>
+        {images.map((image, index) => (
+          <div className={`item${index + 1}`} key={index}>
+            <img src={image.url} alt={`絵${index + 1}`} />
+          </div>
+        ))}
       </div>
 
-      <div className='contact-form'>
+      <div className="contact-form">
         <form onSubmit={toPage2}>
-          <p>出来事の内容</p>
-          <input />
-          
           <p>画像生成のPrompt</p>
-          <textarea />
-          
-          <br />
-          <input className="submit-btn"
-            type='submit'
-            value='送信'
+          <input 
+            value={prompt} onChange={(e) => setPrompt(e.target.value)} 
           />
+
+          <br />
+          <input className="submit-btn" type="submit" value="送信" />
         </form>
       </div>
     </div>
   );
 };
+
