@@ -1,26 +1,42 @@
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from sqlalchemy.ext.declarative import declarative_base
+# DB操作用にsqlalchemyライブラリインポート
+from sqlalchemy import create_engine
+# DBの存在確認とDB作成を行うためにインポート
+from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy.engine.url import URL
+# セッション定義用にインポート
+from sqlalchemy.orm import sessionmaker, scoped_session
 
-dialect = "mysql"
-driver = "mysqldb"
-username = "root"
-password = "Usushio0324"
-host = "host"
-port = "3306"
-database = "sample_db"
-charset_type = "utf8"
-db_url = f"{dialect}+{driver}://{username}:{password}@{host}:{port}/{database}?charset={charset_type}"
+# モデル定義ファイルインポート
+from path_models import Base
 
-# DB接続するためのEngineインスタンス
-ENGINE = create_engine(db_url, echo=True)
+DATABASE = "sqlite:///./fast.db"
 
-# DBに対してORM操作するときに利用
-# Sessionを通じて操作を行う
-session = scoped_session(
-    sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
+ENGINE = create_engine(
+    DATABASE,
+    # 文字コード指定
+    # encoding="utf-8",
+    #自動生成されたSQLを吐き出すようにする
+    pool_recycle=3600,
+    echo=True
 )
 
-# 各modelで利用
-# classとDBをMapping
-Base = declarative_base()
+# session変数にsessionmakerインスタンスを格納
+session = scoped_session(
+    # ORマッパーの設定。自動コミットと自動反映はオフにする
+    sessionmaker(
+        autocommit=False,
+        autoflush=False,
+        bind=ENGINE
+    )
+)
+
+# DBが存在しなければ
+if not database_exists(ENGINE.url):
+    # DBを新規作成する
+    create_database(ENGINE.url)
+    
+#  定義されているテーブルを一括作成
+Base.metadata.create_all(bind=ENGINE)
+
+# DB接続用のセッションクラス、インスタンスが作成されると接続する
+Base.query = session.query_property()
