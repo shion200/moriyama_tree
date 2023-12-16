@@ -4,6 +4,10 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
+import db_model as m
+import db_setting as s
+
+
 fake_users_db = {
     "johndoe": {
         "username": "johndoe",
@@ -36,6 +40,11 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+    
+class UserBase(BaseModel):
+    name : str
+    mail : str
+    sex : str
 
 def get_user(db, username: str):
     if username in db:
@@ -83,6 +92,56 @@ async def read_users_me(current_user: User = Depends(get_current_active_user)):
 async def root():
     return {"message": "Hello World"}
 
+@app.get("users", tags = ["users"])
+async def read_users():
+    result = s.session.query(m.Users).all()
+    return result
+
+@app.post("/users", tags = ["users"])
+async def create_user(data: UserBase):
+    user = m.Users()
+    session = s.session()
+    s.session.add(user)
+    
+    try:
+        user.name = data.name
+        user.mail = data.mail
+        user.sex = data.sex
+        session.commit()
+    except():
+        session.rollback()
+        raise
+    finally:
+        session.close()
+        
+@app.delete("/users/{id}", tags = ["users"])
+async def delete_user(id: int):
+    session = s.session()
+    try:
+        query = s.session.query(m.Users)
+        query = query.filter(m.User.user_id == id)
+        query.delete()
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+    
+@app.put("/users/{id}", tags = ["users"])
+async def update_user(id: int, data:UserBase):
+    session = s.session()
+    try:
+        s.session.query(m.Users).\
+        filter(m.Users.user_id == id).\
+        update({"name" : data.name, "mail" : data.mail, "sex" : data.sex})
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
+    
 # @app.get("/items/")
 # async def read_items(commons: dict = Depends()):
 #     return commons
