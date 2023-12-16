@@ -123,7 +123,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     # result = read_users()
     # user_dict = fake_users_db.get(form_data.username)
     # print(user_dict)
-    print(form_data.username)
     user_dict = dict_user(king, form_data.username)
     if user_dict == None:
         raise HTTPException(status_code=400, detail = "Incorrect username or password")
