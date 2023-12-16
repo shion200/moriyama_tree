@@ -40,8 +40,8 @@ def createImageFromText(promptText):
         cfg_scale=7.0, # Influences how strongly your generation is guided to match your prompt.
                     # Setting this value higher increases the strength in which it tries to match your prompt.
                     # Defaults to 7.0 if not specified.
-        width=512, # Generation width, defaults to 512 if not included.
-        height=512, # Generation height, defaults to 512 if not included.
+        width=1024, # Generation width, defaults to 512 if not included.
+        height=1024, # Generation height, defaults to 512 if not included.
         samples=1, # Number of images to generate, defaults to 1 if not included.
         sampler=generation.SAMPLER_K_DPMPP_2M # Choose which sampler we want to denoise our generation with.
                                                     # Defaults to k_dpmpp_2m if not specified. Clip Guidance only supports ancestral samplers.
