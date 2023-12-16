@@ -1,3 +1,9 @@
-h1{
-    color: red;
+img {
+    margin: auto;
+    display: block;
 }
+
+.contact-form{
+    text-align: center;
+}
+

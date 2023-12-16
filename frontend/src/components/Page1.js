@@ -6,11 +6,15 @@ export const Page1 = () => {
       <div>
         <h1>ログインページ</h1>
 
-        <h2>ユーザーID</h2>
+        <p>名前</p>
         <input type="text" placeholder="ユーザーIDを入力してください" />
-        <h2>パスワード</h2>
+        <p>パスワード</p>
         <input type="text" placeholder="パスワードを入力してください" />
-        <button>ログイン</button>
+        <br />
+        <input className="submit-btn"
+            type='submit'
+            value='ログイン'
+          />
       </div>
     );
   };
