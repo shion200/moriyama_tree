@@ -61,7 +61,7 @@ def createImageFromText(promptText):
                 img = Image.open(io.BytesIO(artifact.binary))
                 img.save("./createdImage/"+promptText.replace(' ','')+".png") # Save our generated images with their seed number as the filename.
                 imageName = "./createdImage/"+promptText.replace(' ','')+ ".png"
-    return imageName
+    return img, imageName
 
 if __name__ == '__main__':
     args = sys.argv
