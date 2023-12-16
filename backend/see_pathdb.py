@@ -51,3 +51,4 @@ def user_photo(name:list):
 
 # for i in s:
 # print(xbox)
+
