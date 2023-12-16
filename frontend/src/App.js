@@ -26,10 +26,6 @@ function App() {
           <p>ユーザーID: 1</p>
         </div>
 
-        
-
-        
-
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />

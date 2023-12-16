@@ -1,12 +1,18 @@
-button{
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 10px 20px;
+
+h2{
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+}
+
+img{
     margin: auto;
     display: block;
+    width: 20%;
+    height: auto;
+}
+
+button{
+    margin: auto;
+    display: block;
+    width: 10%;
+    height: auto;
 }
