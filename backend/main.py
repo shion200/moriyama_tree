@@ -1,10 +1,15 @@
 from typing import Optional
 # from fastapi import Depends, FastAPI
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from see_fastdb import name, password, dict_user
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from starlette.requests import Request
+from starlette.routing import Route
+from createImageFromText2 import createImageFromText
+from googleTranslate import googleTranslate
 
 import db_model as m
 import db_setting as s
@@ -258,3 +263,9 @@ async def delete_user(id: int):
 # async def read_users(commons: dict = Depends()):
 #     return commons
 
+@app.post("/prompt")
+async def getPromptTemp(request: Request, promptTextTemp: str):
+    PromptTextJp = googleTranslate(promptTextTemp)
+    img, imageName = createImageFromText(PromptTextJp)
+    # return FileResponse(img, media_type="image/png"), imageName
+    return imageName
