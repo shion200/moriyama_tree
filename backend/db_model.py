@@ -14,9 +14,12 @@ Base = declarative_base()
 # usersテーブルのモデルUsers
 class Users(Base):
     __tablename__ = 'users'
-    user_id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(20), nullable=False)
-    mail = Column(String(50),nullable=False,unique=True)
-    sex = Column(String(3),nullable=True)
+    name = Column(String(100), primary_key=True)
+    password = Column(String(50),nullable=False,unique=True)
+    url_num = Column(Integer, nullable=False)
+    url = Column(String(1000),nullable=True)
     created_at = Column(DateTime, server_default=current_timestamp())
+
+    # password = Column(String(20), nullable=False)
+    # url_num = Column(String(3), nullable= False)
     
