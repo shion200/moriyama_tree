@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Page1.css";
 
@@ -7,18 +8,34 @@ export const Page1 = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // ここにハードコーディングされたユーザー名とパスワードを設定
-    const correctUsername = "user123"; 
-    const correctPassword = "password123";
+    try {
+      // FormDataオブジェクトを使用してリクエストデータを準備
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
 
-    if (username === correctUsername && password === correctPassword) {
-      navigate("/App"); // 正しい場合、Homeページにリダイレクト
-    } else {
-      alert("名前かパスワードが間違えています"); // 間違いがある場合、警告を表示
+      // FastAPIサーバーにPOSTリクエストを送信
+      const response = await axios.post('http://localhost:8000/token', formData);
+      // レスポンスに認証トークンが含まれている場合
+      if (response.data && response.data.access_token) {
+        // トークンをローカルストレージに保存し、ホームページにリダイレクト
+        localStorage.setItem('token', response.data.access_token);
+        console.log(response.data)
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert("名前かパスワードが間違えています");
+      } else {
+        alert("エラーが発生しました");
+      }
     }
   };
+
+
+
 
   return (
     <div className="Page1">
@@ -33,7 +50,7 @@ export const Page1 = () => {
         />
         <p>パスワード</p>
         <input 
-          type="password" // パスワード入力のためのタイプを設定
+          type="password"
           placeholder="パスワードを入力してください"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

@@ -6,6 +6,9 @@ import { Home } from "./components/Home";
 import { Page1 } from "./components/Page1";
 import { Page2 } from "./components/Page2";
 
+
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +26,7 @@ function App() {
           <br />
           <Link to="/page2">絵を選ぶページ</Link>
           <br />
-          <p>ユーザーID: 1</p>
+          
         </div>
 
         <div className="content">

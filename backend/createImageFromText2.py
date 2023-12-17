@@ -65,6 +65,8 @@ def createImageFromText(promptText):
                 url = saveImageIntoAzure2(promptText.replace(' ','_')+ ".png")
                 print(url)
     return url
+#                 pic_name = promptText.replace(' ','_')
+#     return img, imageName, pic_name
 
 if __name__ == '__main__':
     args = sys.argv
