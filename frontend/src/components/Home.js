@@ -49,7 +49,7 @@ export const Home = () => {
       <div className="container">
         {images.map((image, index) => (
           <div className={`item${index + 1}`} key={index}>
-            <img src={image} alt={`絵${index + 1}`} />
+            <img className="img" src={image} alt={`絵${index + 1}`} />
           </div>
         ))}
       </div>

@@ -24,8 +24,7 @@ function App() {
           <br />
           <Link to="/page1">ログインページ</Link>
           <br />
-          <Link to="/page2">絵を選ぶページ</Link>
-          <br />
+          
           
         </div>
 

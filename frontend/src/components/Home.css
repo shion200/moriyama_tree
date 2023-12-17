@@ -14,31 +14,40 @@
 
 .item1{
     position: absolute;
-    top: 25%;
+    top: 20%;
     right:50%;
-    transform: translateX(+54%);
-    
+    transform: translateX(+51%);
+    width: 50%;
+    height: 50%;
 }
+
+.img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+
 
 .item2{
     position: absolute;
-    top: 40%;
+    top: 38%;
     left:50%;
-    transform: translateX(-75%);
+    transform: translateX(-120%);
 }
 
 .item3{
     position: absolute;
-    top: 40%;
+    top: 38%;
     right:50%;
-    transform: translateX(+80%);
+    transform: translateX(+125%);
 }
 
 .item4{
     position: absolute;
     top: 58%;
     left:50%;
-    transform: translateX(-100%);
+    transform: translateX(-190%);
 }
 
 .item5{
@@ -52,7 +61,7 @@
     position: absolute;
     top: 58%;
     left:50%;
-    transform: translateX(5%);
+    transform: translateX(+100%);
 }
 
 .contact-form{
