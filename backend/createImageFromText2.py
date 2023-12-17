@@ -7,6 +7,7 @@ import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 import sys
 from googleTranslate import googleTranslate
 import random
+from saveImageIntoAzure2 import saveImageIntoAzure2
 
 def createImageFromText(promptText):
     # Our Host URL should not be prepended with "https" nor should it have a trailing slash.
@@ -61,8 +62,11 @@ def createImageFromText(promptText):
                 img = Image.open(io.BytesIO(artifact.binary))
                 img.save("./createdImage/"+promptText.replace(' ','_')+".png") # Save our generated images with their seed number as the filename.
                 imageName = "./createdImage/"+promptText.replace(' ','_')+ ".png"
-                pic_name = promptText.replace(' ','_')
-    return img, imageName, pic_name
+                url = saveImageIntoAzure2(promptText.replace(' ','_')+ ".png")
+                print(url)
+    return url
+#                 pic_name = promptText.replace(' ','_')
+#     return img, imageName, pic_name
 
 if __name__ == '__main__':
     args = sys.argv
