@@ -13,7 +13,7 @@ export const Home = () => {
     // APIから画像データを取得
     const fetchImages = async () => {
       try {
-        const response = await axios.get("APIのURL"); // Azure APIのURLを指定
+        const response = await axios.get("https://myblobstorage434606520.blob.core.windows.net/"); // Azure APIのURLを指定
         setImages(response.data); // 画像データをステートにセット
       } catch (error) {
         console.error("Error fetching images: ", error);
@@ -28,8 +28,12 @@ export const Home = () => {
     event.preventDefault();
     
     try {
-      await axios.post("http://localhost:8000/prompt", {promptTextTemp:prompt});
-      navigate("/Page2");
+      const res = await axios.post("http://localhost:8000/prompt", {promptTextTemp:prompt});
+      const url = res.data
+      console.log(res.data)
+      setImages((images) => [...images, url])
+
+      // navigate("/page2");
     } catch (error) {
       console.error("Error generating image: ", error);
       if (error.response) {
@@ -45,7 +49,7 @@ export const Home = () => {
       <div className="container">
         {images.map((image, index) => (
           <div className={`item${index + 1}`} key={index}>
-            <img src={image.url} alt={`絵${index + 1}`} />
+            <img src={image} alt={`絵${index + 1}`} />
           </div>
         ))}
       </div>
