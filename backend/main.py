@@ -4,52 +4,34 @@ from typing import Optional
 from fastapi import FastAPI, Depends, HTTPException, status, File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
+
 from see_fastdb import name, password, dict_user
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from starlette.requests import Request
+from starlette.requests import Requests
 from starlette.routing import Route
 from createImageFromText2 import createImageFromText
 from googleTranslate import googleTranslate
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.exceptions import JSONResponse
 
 import db_model as m
-import db_setting as s
+import db_settings as s
 
 import path_models as pm
-import path_settings as ps
-
+import path_settings as ps 
 
 king = "fast.db"
 
 async def path_read():
     result = ps.session.query(pm.Users).all()
-    # print(result[1].password)
     return result
 
 async def read_users():
     result = s.session.query(m.Users).all()
-    # print(result[1].password)
     return result
 
 
-# fake_users_db = {
-#     "johndoe": {
-#         "username": "johndoe",
-#         "full_name": "John Doe",
-#         "email": "johndoe@example.com",
-#         "hashed_password": "fakehashedsecret",
-#         "disabled": False,
-#     },
-#     "alice": {
-#         "username": "alice",
-#         "full_name": "Alice Wonderson",
-#         "email": "alice@example.com",
-#         "hashed_password": "fakehashedsecret2",
-#         "disabled": True,
-#     },
-# }
+
 
 app = FastAPI()
 
@@ -283,3 +265,4 @@ async def get_prompt_temp(prompt: Prompt):
     img, imageName = createImageFromText(PromptTextJp) 
     # return FileResponse(img, media_type="image/png")  # 画像のレスポンスが必要な場合
     return imageName
+

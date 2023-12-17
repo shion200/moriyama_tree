@@ -16,5 +16,5 @@ app = FastAPI()
 @app.post("/prompt")
 async def getPromptTemp(request: Request, promptTextTemp: str):
     PromptTextJp = await googleTranslate(promptTextTemp)
-    img, imageName = await createImageFromText(PromptTextJp)
-    return FileResponse(img, media_type="image/png"), imageName
+    url = await createImageFromText(PromptTextJp)
+    return url

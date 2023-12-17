@@ -1,0 +1,9 @@
+{
+    "azureFunctions.projectSubpath": "msdocs-storage-bind-function-service\\javascript",
+    "azureFunctions.deploySubpath": "msdocs-storage-bind-function-service\\javascript",
+    "azureFunctions.postDeployTask": "npm install (functions)",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "npm prune (functions)"
+}
