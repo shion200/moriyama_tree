@@ -13,7 +13,7 @@ export const Home = () => {
     // APIから画像データを取得
     const fetchImages = async () => {
       try {
-        const response = await axios.get("APIのURL"); // Azure APIのURLを指定
+        const response = await axios.get("https://myblobstorage434606520.blob.core.windows.net/"); // Azure APIのURLを指定
         setImages(response.data); // 画像データをステートにセット
       } catch (error) {
         console.error("Error fetching images: ", error);
