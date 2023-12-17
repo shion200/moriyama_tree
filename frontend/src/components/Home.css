@@ -1,5 +1,5 @@
 .container{
-    background-image: url('../../public/images/christmasTree.png');
+    background-image: url('../images/christmasTree.png');
     height: 500px;
     width: auto;
     background-repeat: no-repeat;

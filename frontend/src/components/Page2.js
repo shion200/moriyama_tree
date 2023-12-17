@@ -1,42 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRouter } from "react";
 import "./Page2.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 export const Page2 = () => {
   const navigate = useNavigate();
-  const [image, setImage] = useState(null); // ステートで受け取った画像を管理
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     // APIから画像データを取得
     const fetchImage = async () => {
       try {
-        const response = await axios.get("http://localhost8000/token"); // APIのURLを指定
-        setImage(response.data); // 画像データをステートにセット
+        // Azure Blob Storageから画像を取得
+          const response = await axios.get(
+           // 今私はここにいる
+          
+           "https://myblobstorage434606520.blob.core.windows.net/" // 画像のパスを指定 
+          );
+        
+
+        console.log(response.data);
+
+        // 画像データをステートにセット
+        setImage(response.data);
       } catch (error) {
         console.error("Error fetching image: ", error);
       }
     };
 
     fetchImage();
-  }, []); // コンポーネントがマウントされた時に1度だけ実行
+  }, []);
 
-  // 再生成を処理する関数（必要に応じて更新）
   const handleRegenerate = () => {
-    // 画像を再生成するロジック
+    // 画像を再生成するロジックを実装（必要に応じて）
   };
 
-  // Navigate to home page
   const handleGoHome = () => {
-    navigate("/"); // Navigate to the home page
+    navigate("/");
   };
 
   return (
     <div>
       <h2>生成した画像</h2>
 
-      {image && <img src={image.url} alt="生成した画像" />}
+      {/* 画像を表示 */}
+      {image && <img src={image} alt="生成した画像" />}
 
       <br />
 
@@ -45,8 +53,6 @@ export const Page2 = () => {
       </div>
 
       <form onSubmit={handleRegenerate}>
-        
-
         <p>画像生成のPrompt</p>
         <textarea />
 
