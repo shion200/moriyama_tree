@@ -1,4 +1,4 @@
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_blob_sas, BlobSasPermissions
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, generate_blob_sas, BlobSasPermissions, ContentSettings
 from azure.storage.blob._shared.base_client import create_configuration
 import requests
 from datetime import datetime, timedelta
@@ -13,10 +13,15 @@ def uploadFileToStorage(file_stream, file_name, storage_config):
     # Create a ContainerClient
     container_client = blob_service_client.get_container_client(storage_config['ImageContainer'])
 
+    # 画像のContent-Typeを指定します
+    image_content_setting = ContentSettings(content_type='image/png')
+
     # Upload the file
     blob_name = file_name
     blob_client = container_client.get_blob_client(blob_name)
-    blob_client.upload_blob(file_stream)
+    # blob_client.upload_blob(file_stream)
+    # 画像ファイルをアップロードします
+    blob_client.upload_blob(file_stream, overwrite=True, content_settings=image_content_setting, timeout = 600)
 
     return True
 

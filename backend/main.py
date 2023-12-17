@@ -8,14 +8,15 @@ from pydantic import BaseModel
 from see_fastdb import name, password, dict_user
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from starlette.requests import Requests
+from starlette.requests import Request
 from starlette.routing import Route
 from createImageFromText2 import createImageFromText
 from googleTranslate import googleTranslate
-from fastapi.exceptions import JSONResponse
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 
 import db_model as m
-import db_settings as s
+import db_setting as s
 
 import path_models as pm
 import path_settings as ps 
@@ -258,11 +259,16 @@ async def handler(request:Request, exc:RequestValidationError):
 class Prompt(BaseModel):
     promptTextTemp: str
 
-@app.post("/prompt")
-async def get_prompt_temp(prompt: Prompt):
+#@app.post("/prompt")
+#async def get_prompt_temp(prompt: Prompt):
     # print(request)  # 必要に応じてリクエスト全体を出力
-    PromptTextJp = googleTranslate(prompt.promptTextTemp)
-    img, imageName = createImageFromText(PromptTextJp) 
+#3PromptTextJp = googleTranslate(prompt.promptTextTemp)
+    #img, imageName = createImageFromText(PromptTextJp) 
     # return FileResponse(img, media_type="image/png")  # 画像のレスポンスが必要な場合
-    return imageName
+    #return imageName
 
+@app.post("/prompt")
+async def getPromptTemp(prompt: Prompt):
+    PromptTextJp = googleTranslate(prompt.promptTextTemp)
+    url =  createImageFromText(PromptTextJp)
+    return url
